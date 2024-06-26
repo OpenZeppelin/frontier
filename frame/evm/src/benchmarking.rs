@@ -71,7 +71,7 @@ benchmarks! {
 
 		let caller = "1000000000000000000000000000000000000001".parse::<H160>().unwrap();
 
-		let mut nonce: u64 = 1;
+		let mut nonce: u64 = 0;
 		let nonce_as_u256: U256 = nonce.into();
 
 		let value = U256::default();
