@@ -26,6 +26,9 @@ jobs:
       - name: Install cargo-llvm-cov
         uses: taiki-e/install-action@cargo-llvm-cov
 
+      - name: Install protoc
+        uses: arduino/setup-protoc@v3
+
       - name: Generate lockfile if it doesn't exist
         if: hashFiles('Cargo.lock') == ''
         run: cargo generate-lockfile
