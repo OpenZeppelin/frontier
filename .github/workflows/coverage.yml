@@ -1,0 +1,45 @@
+name: coverage
+# This CI is run manually on-demand and performs a simple calculation of
+# unit tests coverage and reports it to CodeCov
+permissions:
+  contents: read
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - 'polkadot-v1.10.0-coverage'
+
+jobs:
+  coverage:
+    runs-on: ubuntu-latest
+    name: Code Coverage
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - name: Install stable
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: llvm-tools-preview
+
+      - name: Install cargo-llvm-cov
+        uses: taiki-e/install-action@cargo-llvm-cov
+
+      - name: Generate lockfile if it doesn't exist
+        if: hashFiles('Cargo.lock') == ''
+        run: cargo generate-lockfile
+
+      - name: Generate coverage report
+        # Follow the `test-release`command in the Makefile
+        # but without release mode to avoid long build times
+        run: cargo llvm-cov --lib --all --locked --lcov --output-path lcov.info
+
+      - name: Record Rust version
+        run: echo "RUST=$(rustc --version)" >> "$GITHUB_ENV"
+
+      - name: Upload to codecov.io
+        uses: codecov/codecov-action@v4
+        with:
+          fail_ci_if_error: true
+          env_vars: OS,RUST
