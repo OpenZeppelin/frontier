@@ -34,21 +34,21 @@ jobs:
         with:
           submodules: true
 
-      - name: Cache cargo registry & git sources
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.cargo/bin/
-            ~/.cargo/registry/
-            ~/.cargo/git/db/
-          key: ${{ runner.os }}-cargo-unittest-${{ hashFiles('**/Cargo.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-cargo-unittest-${{ hashFiles('**/Cargo.lock') }}
-            ${{ runner.os }}-cargo-unittest-
-            ${{ runner.os }}-cargo-
+      #   - name: Cache cargo registry & git sources
+      #     uses: actions/cache@v4
+      #     with:
+      #       path: |
+      #         ~/.cargo/bin/
+      #         ~/.cargo/registry/
+      #         ~/.cargo/git/db/
+      #       key: ${{ runner.os }}-cargo-unittest-${{ hashFiles('**/Cargo.lock') }}
+      #       restore-keys: |
+      #         ${{ runner.os }}-cargo-unittest-${{ hashFiles('**/Cargo.lock') }}
+      #         ${{ runner.os }}-cargo-unittest-
+      #         ${{ runner.os }}-cargo-
 
-      - name: Run sccache
-        uses: mozilla-actions/sccache-action@v0.0.4
+      #   - name: Run sccache
+      #     uses: mozilla-actions/sccache-action@v0.0.4
 
       - name: Install stable
         uses: dtolnay/rust-toolchain@stable
