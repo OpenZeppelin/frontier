@@ -64,7 +64,7 @@ jobs:
         run: cargo generate-lockfile
 
       - name: Test
-        run: cargo test --lib --all --locked
+        run: cargo test --release --lib --all
 
       - name: Generate coverage report
         # Follow the `test-release`command in the Makefile
