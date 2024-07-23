@@ -28,6 +28,18 @@ jobs:
       #       remove-android: 'true'
       #       remove-haskell: 'true'
 
+      - name: Free disk space
+        run: |
+          echo "Freeing up disk space..."
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /usr/local/lib/android
+          sudo rm -rf /opt/ghc
+          sudo rm -rf "/usr/local/share/boost"
+          sudo rm -rf "$AGENT_TOOLSDIRECTORY"
+          sudo apt-get clean
+          docker rmi $(docker image ls -aq)
+          df -h
+
       - uses: actions/checkout@v4
         with:
           submodules: true
@@ -62,9 +74,6 @@ jobs:
       - name: Generate lockfile if it doesn't exist
         if: hashFiles('Cargo.lock') == ''
         run: cargo generate-lockfile
-
-      - name: Test
-        run: cargo test --release --lib --all
 
       - name: Generate coverage report
         # Follow the `test-release`command in the Makefile
