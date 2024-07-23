@@ -9,9 +9,9 @@ on:
     branches:
       - 'polkadot-v1.10.0-coverage'
 
-env:
-  RUSTC_WRAPPER: sccache
-  SCCACHE_GHA_ENABLED: 'true'
+# env:
+#   RUSTC_WRAPPER: sccache
+#   SCCACHE_GHA_ENABLED: 'true'
 
 jobs:
   coverage:
